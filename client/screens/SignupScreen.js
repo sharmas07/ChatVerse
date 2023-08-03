@@ -2,6 +2,7 @@ View
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import {useNavigation} from '@react-navigation/native'
+import baseURL from '../base_url'
 import axios from 'axios'
 
 const SignupScreen = () => {
@@ -22,14 +23,21 @@ const SignupScreen = () => {
     console.log(email)
     //TODO : call api to register user and save data in database
     try {
-      const response = await axios.post('http://localhost:4000/register', {email, username, password, image})
+   
+      const response = await axios.post(`${baseURL}/register`, {
+        email,
+        name:username ,
+        password,
+        image
+      })
+      alert("User registered successfully")
+      clearFields();
       console.log(response);
     } catch (error) {
       console.log(error)
     }
 
-    alert("User registered successfully")
-    clearFields();
+    
 
   }
   return (

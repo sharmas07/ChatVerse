@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const User = require("../models/userModel");
+const jwt = require('jsonwebtoken')
 
+const createToken = (userId)=>{
+    const payload = {
+        userId: userId
+    }
+    const token = jwt.sign(payload, process.env.SECRET)
+    return token;
+}
 
 const login = (req,res)=>{
     const {email,password} = req.body;
