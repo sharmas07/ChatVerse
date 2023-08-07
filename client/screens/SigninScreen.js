@@ -1,21 +1,37 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {useNavigation} from '@react-navigation/native'
 import baseURL from '../base_url';
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SigninScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
+  useEffect(() => {
+    
+    // AsyncStorage.clear(); // for test remove afterwards
+
+    const checkLoginStatus = async ()=>{
+      let token = await AsyncStorage.getItem("authToken");
+      if(token){
+        navigation.replace("Home");
+      }
+    }
+    checkLoginStatus();
+  }, [])
+  
+
   const handleLogin = async ()=>{
     try {
-      const response = await axios.post(`${baseURL}/login`, {email, password})
-      console.log(response);
-      alert("Login succesful");
+      const {data} = await axios.post(`${baseURL}/login`, {email, password})
+      console.log(data);
+      AsyncStorage.setItem("authToken", data)
+      navigation.replace("Home");
     } catch (error) {
-      console.log(error)
+      alert("please enter correct credentials")
     }
   }
   return (

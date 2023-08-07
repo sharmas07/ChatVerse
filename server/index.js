@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 const jwt = require("jsonwebtoken");
 const { register, login } = require("./controllers/authController");
+const { getAllUsersExceptCurrentUser, sendFriendRequest, getCurrentUserSentFriendReqs } = require("./controllers/userController");
 
 
 mongoose.connect(
@@ -41,8 +42,11 @@ app.get("/",(req,res)=>{
        
 })
 
-
+// auth routes
 app.post("/register",register)
-
-
 app.post("/login",login)
+
+// user routes
+app.get("/users/:userId", getAllUsersExceptCurrentUser)
+app.post("/friend-request", sendFriendRequest)
+app.get("/friend-request/:userId", getCurrentUserSentFriendReqs)

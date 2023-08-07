@@ -33,6 +33,7 @@ const SignupScreen = () => {
       alert("User registered successfully")
       clearFields();
       console.log(response);
+      navigation.navigate("Login")
     } catch (error) {
       console.log(error)
     }
