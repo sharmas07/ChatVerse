@@ -1,3 +1,3 @@
-const baseURL = "https://chatverse-api.onrender.com"
+const baseURL = "http://192.168.10.204:4000"
 
 export default baseURL

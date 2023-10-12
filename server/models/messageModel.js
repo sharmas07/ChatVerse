@@ -5,7 +5,7 @@ const messageSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
-    receipentId:{
+    recepientId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
@@ -21,5 +21,5 @@ const messageSchema = new mongoose.Schema({
     }
 })
 
-const messageModel = mongoose.model('messageModel', messageSchema)
-module.export = messageModel
+const Message = mongoose.model('Message', messageSchema)
+module.exports = Message

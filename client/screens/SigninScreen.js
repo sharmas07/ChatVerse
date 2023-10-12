@@ -12,7 +12,7 @@ const SigninScreen = () => {
 
   useEffect(() => {
     
-    // AsyncStorage.clear(); // for test remove afterwards
+    AsyncStorage.clear(); // for test remove afterwards
 
     const checkLoginStatus = async ()=>{
       let token = await AsyncStorage.getItem("authToken");
@@ -25,6 +25,7 @@ const SigninScreen = () => {
   
 
   const handleLogin = async ()=>{
+    console.log("login got hit", email);
     try {
       const {data} = await axios.post(`${baseURL}/login`, {email, password})
       console.log(data);

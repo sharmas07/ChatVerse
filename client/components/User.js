@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Image, View, Pressable } from 'react-native'
-import React,{useContext, useState}  from 'react'
+import React,{useContext, useEffect, useState}  from 'react'
 import { UserType } from '../UserContext'
 import axios from 'axios'
 import baseURL from '../base_url'
@@ -8,6 +8,43 @@ const User = ({ user }) => {
     const dummyUserUrl = 'https://res.cloudinary.com/duaob0aso/image/upload/v1691231960/userProfile_s3xqnt.png'
     const {userId, setUserId} = useContext(UserType);
     const [requestSent, setRequestSent] = useState(false);
+    const [friendRequests, setFriendRequests] = useState([]);
+    const [userFriends, setUserFriends] = useState([]);
+
+    useEffect(()=>{
+        const fetchFriendRequest = async()=>{
+            try {
+                const response = await axios.get(`${baseURL}/friend-requests/sent/${userId}`)
+                // console.log(response)
+                if(response){
+                    setFriendRequests(response.data);
+                }
+                else{
+                    console.log("error", response.status)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchFriendRequest();
+    },[])
+    useEffect(()=>{
+        const fetchFriends = async()=>{
+            try {
+                const response = await axios.get(`${baseURL}/friends/${userId}`)
+                console.log(response)
+                if(response){
+                    setUserFriends(response.data);
+                }
+                else{
+                    console.log("error", response.status)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchFriends();
+    },[])
     async function handleSendFriendRequest(currentUserId, selectedUserId){
         try {
             const response = await axios.post(`${baseURL}/friend-request`, {currentUserId, selectedUserId});
@@ -20,6 +57,7 @@ const User = ({ user }) => {
         }
     }
     return (
+        
         <Pressable style={{
             flexDirection:'row',
             alignItems:'center',
@@ -33,7 +71,7 @@ const User = ({ user }) => {
                 <Text style={{fontSize:18, fontWeight:'bold'}}>{user.name}</Text>
                 
             </View>
-            <Pressable onPress={()=>handleSendFriendRequest(userId, user._id)} style={{backgroundColor:"#567189", padding:10, borderRadius:7, width:105}}>
+            <Pressable onPress={()=>handleSendFriendRequest(userId, user._id)} style={{backgroundColor:"#000", padding:10, borderRadius:7, width:105}}>
                     <Text style={{color:"#fff", textAlign:'center', fontSize:13}}>
                         Add Friend
                     </Text>

@@ -9,9 +9,7 @@ const FriendsScreen = () => {
     const {userId, setUserId} = useContext(UserType);
     const [friendRequests, sentFriendRequests] = useState([]);
     useEffect(() => {
-        fetchFriendRequests();
-    }, [])
-    
+           
     const fetchFriendRequests = async ()=>{
         try {
             const response = await axios.get(`${baseURL}/friend-request/${userId}`)
@@ -27,14 +25,17 @@ const FriendsScreen = () => {
             console.log(error)
         }
     }
+        fetchFriendRequests(); 
+    }, [])
+ 
  
   return (
     <View style={{padding:10, marginHorizontal:12}}>
-        {friendRequests.length > 0 && <Text>Your Friend Requests</Text>}
+        <Text>Your Friend Requests</Text>
         {friendRequests.map((user, index)=>{
-            <FriendRequest key={index} user={user} friendRequests={friendRequests} sentFriendRequests={sentFriendRequests}></FriendRequest>
+           return  <FriendRequest key={index} user={user} friendRequests={friendRequests} sentFriendRequests={sentFriendRequests}></FriendRequest>
         })}
-       
+        
     </View>
   )
 }

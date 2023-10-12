@@ -21,7 +21,7 @@ const HomeScreen = () => {
       headerTitle: "ChatVerse",
       headerRight: () => (
         <View style={{flexDirection:"row", alignItems:"center", gap:8}}>
-          <Ionicons name="chatbox-ellipses-outline" size={24} color="black" />
+          <Ionicons onPress={()=>navigation.navigate("Chats")} name="chatbox-ellipses-outline" size={24} color="black" />
           <Ionicons onPress={handleNavigateToFriends} name="people-outline" size={24} color="black" />
         </View>
       ),
@@ -53,13 +53,7 @@ const HomeScreen = () => {
           )
         })}
       </View>
-      <View style={{padding:10}}>
-        {users && users.map((user, index)=>{
-          return (
-            <User key={index} user={user}/>
-          )
-        })}
-      </View>
+     
 
     </ScrollView>
   )

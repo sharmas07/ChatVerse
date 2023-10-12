@@ -6,6 +6,8 @@ import SignupScreen from './screens/SignupScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import FriendsScreen from './screens/FriendsScreen';
+import ChatScreen from './screens/ChatScreen';
+import ChatMessagesScreen from './screens/ChatMessagesScreen';
 
 
 const StackNavigator = () => {
@@ -18,6 +20,8 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="Register" component={SignupScreen}  options={{headerShown:false}}/>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Friends" component={FriendsScreen} />
+        <Stack.Screen name="Chats" component={ChatScreen} />
+        <Stack.Screen name="Messages" component={ChatMessagesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

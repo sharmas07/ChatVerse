@@ -23,7 +23,6 @@ const SignupScreen = () => {
     console.log(email)
     //TODO : call api to register user and save data in database
     try {
-   
       const response = await axios.post(`${baseURL}/register`, {
         email,
         name:username ,
@@ -37,8 +36,6 @@ const SignupScreen = () => {
     } catch (error) {
       console.log(error)
     }
-
-    
 
   }
   return (
