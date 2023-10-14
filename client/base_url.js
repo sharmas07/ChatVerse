@@ -1,3 +1,3 @@
-const baseURL = "http://192.168.10.204:4000"
+const baseURL = ""
 
 export default baseURL

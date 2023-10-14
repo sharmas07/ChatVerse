@@ -88,7 +88,7 @@ const User = ({ user }) => {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{user.name}</Text>
       </View>
 
-      {userFriends.includes(item._id) ? (
+      {userFriends.includes(user._id) ? (
         <Pressable
           style={{
             backgroundColor: "#82cd47",
@@ -100,7 +100,7 @@ const User = ({ user }) => {
           <Text style={{ textAlign: "center", color: "white" }}>Friends</Text>
         </Pressable>
       ) : requestSent ||
-        friendRequests.some((friend) => friend._id === item._id) ? (
+        friendRequests.some((friend) => friend._id === user._id) ? (
         <Pressable
           style={{
             backgroundColor: "gray",
