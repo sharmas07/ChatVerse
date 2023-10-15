@@ -8,11 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SigninScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
-    
-    AsyncStorage.clear(); // for test remove afterwards
 
     const checkLoginStatus = async ()=>{
       let token = await AsyncStorage.getItem("authToken");
@@ -25,13 +25,19 @@ const SigninScreen = () => {
   
 
   const handleLogin = async ()=>{
+    setIsDisabled(true);
+    setLoading(true)
     console.log("login got hit", email);
     try {
       const {data} = await axios.post(`${baseURL}/login`, {email, password})
       console.log(data);
       AsyncStorage.setItem("authToken", data)
       navigation.replace("Home");
+      setIsDisabled(false);
+      setLoading(false)
     } catch (error) {
+      setIsDisabled(false);
+      setLoading(false)
       alert("please enter correct credentials")
     }
   }
@@ -44,9 +50,7 @@ const SigninScreen = () => {
     }}>
       <KeyboardAvoidingView>
         <View style={{ marginTop: 100, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: "#4A55A2", fontSize: 17, fontWeight: "600" }}>
-            Login
-          </Text>
+
           <Text style={{ fontSize: 17, fontWeight: "600" }}>Login into your account</Text>
         </View>
 
@@ -62,8 +66,8 @@ const SigninScreen = () => {
             <TextInput secureTextEntry={true} value={password} onChangeText={(text) => setPassword(text)} style={{fontSize:email? 18: 18, borderBottomColor: "gray", borderBottomWidth: 1, marginVertical: 10, width: 300 }} placeholderTextColor={"grey"} placeholder="Enter Your Password" />
           </View>
         
-        <Pressable onPress={handleLogin} style={{width:200, backgroundColor:"black", padding:15, marginTop:50, marginLeft:'auto', marginRight:'auto', borderRadius:10}}>
-          <Text style={{color:"white", fontSize:16,textAlign:'center', fontWeight:600}}>Login</Text>
+        <Pressable disabled={isDisabled}  onPress={handleLogin} style={{width:200, backgroundColor:`${isDisabled ?'grey':'black'}`, padding:15, marginTop:50, marginLeft:'auto', marginRight:'auto', borderRadius:10}}>
+          <Text style={{color:"white", fontSize:16,textAlign:'center', fontWeight:600}}>{loading?'Logging in...':'Login'}</Text>
         </Pressable>
         <Pressable onPress={()=> navigation.navigate("Register")} style={{marginTop:20}}>
           <Text style={{textAlign:"center", color:'grey'}}>
